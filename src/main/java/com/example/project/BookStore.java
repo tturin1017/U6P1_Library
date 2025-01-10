@@ -5,13 +5,7 @@ public class BookStore{
     private User[] users=new User[20]; //max 20 users for the book store
     private int currentUserIndex=-1;
 
-    public BookStore(int size){
-        books = new Book[size];
-    }
-
-    public BookStore(Book[] books){
-        this.books = books;
-    }
+    public BookStore(){}
 
     public void addUser(User user){
         if(currentUserIndex<users.length){
@@ -39,15 +33,20 @@ public class BookStore{
         users = newUsers;
     }
 
-
     public void addBook(Book book){ //adds book to the end of array //book array is dynamic, not static
-        //create a new list 
-        Book[] newBooks = new Book[books.length+1];
-        for(int i=0; i<books.length; i++){
-            newBooks[i] = books[i];
+        if(books==null){ //first book to be added to empty array
+            Book[] newBooks = new Book[1];
+            newBooks[0] = book;
+            this.books = newBooks;
+        }else{
+            System.out.println(this.bookStoreInfo());
+            Book[] newBooks = new Book[books.length+1];
+            for(int i=0; i<books.length; i++){
+                newBooks[i] = books[i];
+            }
+            newBooks[books.length-1]=book;
+            this.books = newBooks;
         }
-        newBooks[books.length-1]=book;
-        this.books = newBooks;
     }
 
     public void insertBook(Book book, int index){
@@ -88,24 +87,44 @@ public class BookStore{
         }
     }
 
+    public String bookStoreInfo(){
+        String x = "";
+        for(int i =0 ; i<books.length;i++){
+            x+="Book #"+(i+1)+": ";
+            if(books[i]!=null){
+                x+=books[i].bookInfo()+"\n";   
+            }else{
+                x+="empty";
+            }
+            
+        }
+        return x;
+    }
     public static void main(String[] args) { //your main program goes here
-        IdGenerate g = new IdGenerate();
-        IdGenerate.generateID();
-        User u1 = new User("John",g.getCurrentId());
-        IdGenerate.generateID();
-        Book b1 = new Book("The Great Gatsby","Scott Fitzgerald", 1925, "979-8351145013",3);
-        User u2 = new User("Jane",g.getCurrentId());
-        Book[] books = new Book[5];
-        books[0] = b1;
-        u2.setBooks(books);
-      
-        IdGenerate.generateID();
-        User u3 = new User("Mary",g.getCurrentId());
-        System.out.println(u1.userInfo());
-        System.out.println(u2.userInfo());
-        // System.out.println(u3.userInfo());
 
-        //System.out.println("Name: John\nId: 101\nBooks: \nnull\nnull\nnull\nnull\nnull\n");
+        IdGenerate.generateID();
+        User u1 = new User("John",IdGenerate.getCurrentId());
+        IdGenerate.generateID();
+        User u2 = new User("Jane",IdGenerate.getCurrentId());
+        IdGenerate.generateID();
+        User u3 = new User("Mary",IdGenerate.getCurrentId());
+
+        Book b1 = new Book("The Great Gatsby","Scott Fitzgerald", 1925, "979-8351145013",3);
+        Book b2 = new Book("The Outliers", "Malcolm Gladwell",2008,"978-0316017930",1);
+        Book b3 = new Book("1984", "George Orwell", 1949, "978-0451524935", 5);
+        Book b4 = new Book("Brave New World", "Aldous Huxley", 1932, "978-0060850524", 3);
+
+        BookStore store = new BookStore(); //create a new bookstore with 6 empty books
+        store.addBook(b1); 
+        System.out.println(store.bookStoreInfo());
+        store.addBook(b2);store.addBook(b3);store.addBook(b4);
+
+        
+        System.out.println(store.bookStoreInfo());
+
+                  
+        
+    
 
     }
 

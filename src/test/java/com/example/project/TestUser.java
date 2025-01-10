@@ -1,5 +1,10 @@
 package com.example.project;
 import org.junit.jupiter.api.Test;
+
+import com.example.project.Book;
+import com.example.project.IdGenerate;
+import com.example.project.User;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestUser {
