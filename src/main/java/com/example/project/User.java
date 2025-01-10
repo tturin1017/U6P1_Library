@@ -4,7 +4,7 @@ package com.example.project;
 public class User{
     private String name;
     private String  Id;
-    private Books[] books = new Books[5]; //can only take out 5 books at a time
+    private Book[] books = new Book[5]; //can only take out 5 books at a time
     
     public User(String name, String Id){
         this.name=name;
@@ -28,22 +28,29 @@ public class User{
         this.Id = Id;
     }
 
-    public Books[] getBooks() {
+    public Book[] getBooks() {
         return this.books;
     }
 
-    public void setBooks(Books[] books) {
+    public void setBooks(Book[] books) {
         this.books = books;
     }
 
-    public String userInfo(){
-        String x = "Name: "+name+", ID: "+Id+", Books: ";
+    public String bookListInfo(){
+        String x = "";
         for(Book b: books){
-            x+=b.bookInfo()+ "\n";
+            if(b!=null){
+                x+=b.bookInfo()+ "\n";
+            }else{
+                x+="null\n";
+            }
         }
         return x;
     }
 
-
-
+    public String userInfo(){ //return Name: John\nID: 101\nBooks:\n[print out book info]
+        String x = "Name: "+name+"\nId: "+Id+"\nBooks: \n"+bookListInfo();
+        
+        return x;
+    }
 }
