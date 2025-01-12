@@ -38,13 +38,12 @@ public class BookStore{
             Book[] newBooks = new Book[1];
             newBooks[0] = book;
             this.books = newBooks;
-        }else{
-            System.out.println(this.bookStoreInfo());
+        }else{ //if the books array is not empty
             Book[] newBooks = new Book[books.length+1];
             for(int i=0; i<books.length; i++){
                 newBooks[i] = books[i];
             }
-            newBooks[books.length-1]=book;
+            newBooks[newBooks.length-1]=book; //insert new book at the last item in the array
             this.books = newBooks;
         }
     }
@@ -115,12 +114,10 @@ public class BookStore{
         Book b4 = new Book("Brave New World", "Aldous Huxley", 1932, "978-0060850524", 3);
 
         BookStore store = new BookStore(); //create a new bookstore with 6 empty books
-        store.addBook(b1); 
-        System.out.println(store.bookStoreInfo());
-        store.addBook(b2);store.addBook(b3);store.addBook(b4);
+        store.addBook(b1);store.addBook(b2);store.addBook(b3);store.addBook(b4);
 
         
-        System.out.println(store.bookStoreInfo());
+        //System.out.println(store.bookStoreInfo());
 
                   
         
