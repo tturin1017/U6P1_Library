@@ -42,7 +42,7 @@ public class User{
             if(b!=null){
                 x+=b.bookInfo()+ "\n";
             }else{
-                x+="null\n";
+                x+="empty\n";
             }
         }
         return x;

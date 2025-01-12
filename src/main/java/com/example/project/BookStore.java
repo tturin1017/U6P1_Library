@@ -2,7 +2,7 @@ package com.example.project;
 
 public class BookStore{
     private Book[] books;
-    private User[] users=new User[20]; //max 20 users for the book store
+    private User[] users=new User[10]; //max 20 users for the book store
     private int currentUserIndex=-1;
 
     public BookStore(){}
@@ -14,20 +14,25 @@ public class BookStore{
         }   
     }
 
-    public void removeUser(User user){
+    public void removeUser(User user){ 
         for(int i=0; i<users.length;i++){
-            if(users[i].getId().equals(user.getId())){
-                users[i]=null;
+            if(users[i]!=null){
+                if(users[i].getId().equals(user.getId())){
+                    users[i]=null;  
+                }
             }
         }
         this.consolidateUsers(); //you must consolidate if removing any item from array
     }
 
-    public void consolidateUsers(){ // consolidate both user arrays .. you don't need to consolidate books array because it is dynamic
+    public void consolidateUsers(){ // consolidate user arrays .. you don't need to consolidate books array because it is dynamic
         User[] newUsers = new User[users.length];
-        for(int i=0; i<users.length;i++){ 
-            if(users[i]!=null){
-                newUsers[i]=users[i];
+        int counter = 0;
+
+        for(User user: users){
+            if(user!=null){
+                newUsers[counter]=user;
+                counter++;
             }
         }
         users = newUsers;
@@ -52,6 +57,20 @@ public class BookStore{
         //if index is out of bounds, do not update the book array
         if(index<books.length+1){
             Book[] newBooks = new Book[books.length+1];
+            int i =0;
+            while(index<=i){
+                newBooks[i]=books[i];//books before the insert
+                if(index==i){
+                    Book temp = books[i];
+                    newBooks[i]=book;
+                    newBooks[i+1]=temp;
+                    for(int j=i+2;j<newBooks.length;j++){
+                        newBooks[j]=books[j];
+                    }
+                }
+                i++;
+            }
+
             for(int i=0; i<books.length;i++){
                 if(i==index){
                     newBooks[i]=book; //the book that is to be inserted
@@ -86,16 +105,28 @@ public class BookStore{
         }
     }
 
-    public String bookStoreInfo(){
+    public String bookStoreBookInfo(){
         String x = "";
         for(int i =0 ; i<books.length;i++){
             x+="Book #"+(i+1)+": ";
             if(books[i]!=null){
                 x+=books[i].bookInfo()+"\n";   
             }else{
-                x+="empty";
+                x+="book empty";
             }
             
+        }
+        return x;
+    }
+
+    public String bookStoreUserInfo(){
+        String x="";
+        for(int i=0;i<users.length;i++){
+            if(users[i]!=null){
+                x+=users[i].userInfo();
+            }else{
+                x+="user empty\n";
+            }
         }
         return x;
     }
@@ -107,19 +138,24 @@ public class BookStore{
         User u2 = new User("Jane",IdGenerate.getCurrentId());
         IdGenerate.generateID();
         User u3 = new User("Mary",IdGenerate.getCurrentId());
+        IdGenerate.generateID();
+        User u4 = new User("Delete ME",IdGenerate.getCurrentId());
 
         Book b1 = new Book("The Great Gatsby","Scott Fitzgerald", 1925, "979-8351145013",3);
         Book b2 = new Book("The Outliers", "Malcolm Gladwell",2008,"978-0316017930",1);
         Book b3 = new Book("1984", "George Orwell", 1949, "978-0451524935", 5);
         Book b4 = new Book("Brave New World", "Aldous Huxley", 1932, "978-0060850524", 3);
-
+        Book insertedBook = new Book("Insert me","Author",1900, "1234", 1);
         BookStore store = new BookStore(); //create a new bookstore with 6 empty books
         store.addBook(b1);store.addBook(b2);store.addBook(b3);store.addBook(b4);
-
+        store.addUser(u1);store.addUser(u2);store.addUser(u3);store.addUser(u4);
         
-        //System.out.println(store.bookStoreInfo());
+        store.removeUser(u4);
+        store.insertBook(insertedBook, 0);
+        //System.out.println(store.bookStoreUserInfo());
+        System.out.println(store.bookStoreBookInfo());
 
-                  
+                
         
     
 
