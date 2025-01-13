@@ -7,6 +7,18 @@ public class BookStore{
 
     public BookStore(){}
 
+    public User[] getUsers(){ //required
+        return users;
+    }
+
+    public void setUsers(User[] users){ //required
+        this.users = users;
+    }
+
+    public Book[] getBooks(){ //required
+        return books;
+    }
+
     public void addUser(User user){
         if(currentUserIndex<users.length){
             currentUserIndex++;
@@ -80,13 +92,16 @@ public class BookStore{
                 }
             }
         }
-        for(int i=0;i<index;i++){ //consiladting books
-            newBooks[i]=books[i];
+        if (index!=-1){
+            for(int i=0;i<index;i++){ //consiladting books
+                newBooks[i]=books[i];
+            }
+            for(int i=index;i<books.length-1;i++){
+                newBooks[i]=books[i+1];
+            }
+            books=newBooks;
         }
-        for(int i=index;i<books.length-1;i++){
-            newBooks[i]=books[i+1];
-        }
-        books=newBooks;
+        
 
     }
 
@@ -124,22 +139,23 @@ public class BookStore{
         IdGenerate.generateID();
         User u3 = new User("Mary",IdGenerate.getCurrentId());
         IdGenerate.generateID();
-        User u4 = new User("Delete ME",IdGenerate.getCurrentId());
+        User u4 = new User("Alex",IdGenerate.getCurrentId());
 
         Book b1 = new Book("The Great Gatsby","Scott Fitzgerald", 1925, "979-8351145013",3);
         Book b2 = new Book("The Outliers", "Malcolm Gladwell",2008,"978-0316017930",1);
         Book b3 = new Book("1984", "George Orwell", 1949, "978-0451524935", 5);
         Book b4 = new Book("Brave New World", "Aldous Huxley", 1932, "978-0060850524", 3);
-        Book insertedBook = new Book("Insert me","Author",1900, "1234", 1);
+        Book b5 = new Book("Insert me","Author",1900, "1234", 1);
         BookStore store = new BookStore(); //create a new bookstore with 6 empty books
-        store.addBook(b1);store.addBook(b2);store.addBook(b3);store.addBook(b4);
+        store.addBook(b1);store.addBook(b2);store.addBook(b3);store.addBook(b4);store.addBook(b5);
         store.addUser(u1);store.addUser(u2);store.addUser(u3);store.addUser(u4);
         store.removeUser(u4);
-        store.insertBook(insertedBook, 4);
-        //System.out.println(store.bookStoreUserInfo());
+        store.removeBook(b1); store.removeBook(b1); store.removeBook(b1); 
+        // store.insertBook(insertedBook, 4);
+        // //System.out.println(store.bookStoreUserInfo());
         System.out.println(store.bookStoreBookInfo());
-        store.removeBook(insertedBook);
-        System.out.println(store.bookStoreBookInfo());
+        // store.removeBook(insertedBook);
+        // System.out.println(store.bookStoreBookInfo());
 
                 
         
