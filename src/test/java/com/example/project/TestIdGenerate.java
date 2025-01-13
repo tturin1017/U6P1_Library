@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestIdGenerate {
     @Test
     public void testIdGenerate(){
+        IdGenerate.reset();
        
         IdGenerate.generateID(); //100
         IdGenerate.generateID(); //101

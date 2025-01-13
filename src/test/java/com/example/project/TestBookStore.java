@@ -4,9 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 public class TestBookStore {
-    public void userSetup(){
-        
-    }
+
 
     @Test
     public void testAddUser(){
@@ -119,7 +117,5 @@ public class TestBookStore {
         store.insertBook(b5,4);
         Book[] expected = {b1,b2,b3,b4,b5};
         assertArrayEquals(expected, store.getBooks());
-
-    
     }
 }
