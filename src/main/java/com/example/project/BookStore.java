@@ -57,29 +57,14 @@ public class BookStore{
         //if index is out of bounds, do not update the book array
         if(index<books.length+1){
             Book[] newBooks = new Book[books.length+1];
-            int i =0;
-            while(index<=i){
-                newBooks[i]=books[i];//books before the insert
-                if(index==i){
-                    Book temp = books[i];
-                    newBooks[i]=book;
-                    newBooks[i+1]=temp;
-                    for(int j=i+2;j<newBooks.length;j++){
-                        newBooks[j]=books[j];
-                    }
-                }
-                i++;
+            for(int i=0; i<index;i++){
+                newBooks[i]=books[i];
             }
-
-            for(int i=0; i<books.length;i++){
-                if(i==index){
-                    newBooks[i]=book; //the book that is to be inserted
-                }else if(i>index){
-                    newBooks[i]=books[i-1]; //the book after inserted book
-                }else{
-                    newBooks[i]=books[i];//books before inserterd book
-                }
+            newBooks[index]=book;
+            for(int i=index;i<newBooks.length-1;i++){
+                newBooks[i+1]=books[i];
             }
+            books=newBooks;
         }
     }
 
@@ -95,14 +80,14 @@ public class BookStore{
                 }
             }
         }
-        
-        for(int i=0;i<newBooks.length;i++){
-            if(i<index){ //before the null item
-                newBooks[i]=books[i];
-            }else if(index>=i){
-                newBooks[i]=books[i+1];
-            }
+        for(int i=0;i<index;i++){ //consiladting books
+            newBooks[i]=books[i];
         }
+        for(int i=index;i<books.length-1;i++){
+            newBooks[i]=books[i+1];
+        }
+        books=newBooks;
+
     }
 
     public String bookStoreBookInfo(){
@@ -112,7 +97,7 @@ public class BookStore{
             if(books[i]!=null){
                 x+=books[i].bookInfo()+"\n";   
             }else{
-                x+="book empty";
+                x+="book empty\n";
             }
             
         }
@@ -149,10 +134,11 @@ public class BookStore{
         BookStore store = new BookStore(); //create a new bookstore with 6 empty books
         store.addBook(b1);store.addBook(b2);store.addBook(b3);store.addBook(b4);
         store.addUser(u1);store.addUser(u2);store.addUser(u3);store.addUser(u4);
-        
         store.removeUser(u4);
-        store.insertBook(insertedBook, 0);
+        store.insertBook(insertedBook, 4);
         //System.out.println(store.bookStoreUserInfo());
+        System.out.println(store.bookStoreBookInfo());
+        store.removeBook(insertedBook);
         System.out.println(store.bookStoreBookInfo());
 
                 
